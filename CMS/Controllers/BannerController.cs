@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using CMS.DataLayer.Banner;
 using CMS.DataLayer.Header;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,11 +12,10 @@ namespace CMS.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("permit")]
     public class BannerController : ControllerBase
     {
-        [HttpGet]
-
-        [Route("Get")]
+        [HttpGet]        
         public ActionResult Get()
         {
             BannerGet banner = new BannerGet();
@@ -32,6 +32,12 @@ namespace CMS.Controllers
         {
             BannerEdit bannerEdit = new BannerEdit();
             return Ok(bannerEdit.Edit(banner));
+        }
+        [HttpDelete]
+        public ActionResult Delete(Models.Banner banner)
+        {
+            BannerDelete bannerDelete = new BannerDelete();
+            return Ok(bannerDelete.Delete(banner));
         }
     }
 }
