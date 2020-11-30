@@ -26,6 +26,14 @@ namespace CMS
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+            services.AddCors(options =>
+            {
+                options.AddPolicy("permit",
+                builder =>
+                {
+                    builder.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -41,6 +49,8 @@ namespace CMS
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseCors("permit");
 
             app.UseEndpoints(endpoints =>
             {
