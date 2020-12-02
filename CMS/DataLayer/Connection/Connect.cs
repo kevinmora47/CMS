@@ -10,11 +10,27 @@ namespace CMS.DataLayer.Connection
     {
         public string Connection { get; set; }
 
-        public void GetConnection()
+        public async Task GetConnectionAsync(Models.User user)
         {
-            using (SqlConnection cmd = new SqlConnection())
-            {                
-            }      
-	}
+            using (SqlConnection sql = new SqlConnection("Server=DESKTOP-L73GDJC\\SQLEXPRESS;Database=CMS;Trusted_Connection=True;"))
+            {
+                using (SqlCommand cmd = new SqlCommand("ValidateUser", sql))
+                {
+                    cmd.CommandType = System.Data.CommandType.StoredProcedure;
+                    cmd.Parameters.AddWithValue("@username", user.username);
+                    cmd.Parameters.AddWithValue("@pass", user.pass);
+                    await sql.OpenAsync();
+                    int result = 0;
+
+                    using (var reader = await cmd.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            result = Convert.ToInt32(reader["result"]);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
