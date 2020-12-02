@@ -14,7 +14,7 @@ namespace CMS.Controllers
     public class UserController : ControllerBase
     {   
         [HttpPost]
-        public ActionResult validateSesion(Models.Users user)
+        public ActionResult validateSesion(Models.User user)
         {
             return null;
         }
