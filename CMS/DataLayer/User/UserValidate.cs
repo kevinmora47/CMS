@@ -8,7 +8,7 @@ namespace CMS.DataLayer.User
 {
     public class UserValidate
     {
-        public bool ValidateUser(Models.Users users)
+        public bool ValidateUser(Models.User users)
         {
             using (Models.CMSContext db = new Models.CMSContext())
             {
